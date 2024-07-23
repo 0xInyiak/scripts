@@ -2,11 +2,16 @@ import requests
 import sys
 import os
 
+# Define the proxy
+proxy = {
+    'http': 'http://127.0.0.1:8080',
+    'https': 'http://127.0.0.1:8080'
+}
 
-def uploadToDefectDojo(is_new_import, token, url, product_name, engagement_name, filename):
+def uploadToDefectDojo(is_new_import, token, url, product_name, engagement_name, filename, scan_type):
     multipart_form_data = {
         'file': (filename, open(filename, 'rb')),
-        'scan_type': (None, 'Semgrep JSON Report'),
+        'scan_type': (None, scan_type),
         'product_name': (None, product_name),
         'engagement_name': (None, engagement_name),
     }
@@ -18,6 +23,8 @@ def uploadToDefectDojo(is_new_import, token, url, product_name, engagement_name,
         headers={
             'Authorization': 'Token ' + token,
         }
+        #proxies=proxy,
+        #verify=False
     )
 
     print(r.status_code)
@@ -33,14 +40,13 @@ if __name__ == "__main__":
     except KeyError: 
         print("Please set the environment variable DEFECT_DOJO_API_TOKEN") 
         sys.exit(1)
-    if len(sys.argv) == 9:
+    if len(sys.argv) == 11:
         url = sys.argv[2]
         product_name = sys.argv[4]
         engagement_name = sys.argv[6]
         report = sys.argv[8]
-        uploadToDefectDojo(False, token, url, product_name, engagement_name, report)
+        scan_type = sys.argv[10]
+        uploadToDefectDojo(False, token, url, product_name, engagement_name, report,scan_type)
     else:
         print(
-            'Usage: python3 import_semgrep_to_defect_dojo.py --host DOJO_URL --product PRODUCT_NAME --engagement ENGAGEMENT_NAME --report REPORT_FILE')
-    
-    
+            'Usage: python3 import_to_defect_dojo.py --host DOJO_URL --product PRODUCT_NAME --engagement ENGAGEMENT_NAME --report REPORT_FILE --scan-type SCAN_TYPE')
