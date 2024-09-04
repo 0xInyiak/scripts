@@ -41,7 +41,7 @@ if __name__ == "__main__":
     except KeyError: 
         print("Please set the environment variable DEFECT_DOJO_API_TOKEN") 
         sys.exit(1)
-    if len(sys.argv) == 11:
+    if len(sys.argv) == 13:
         url = sys.argv[2]
         product_name = sys.argv[4]
         engagement_name = sys.argv[6]
