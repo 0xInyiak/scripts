@@ -47,8 +47,10 @@ if __name__ == "__main__":
         engagement_name = sys.argv[6]
         report = sys.argv[8]
         scan_type = sys.argv[10]
+        print(scan_type)
         test_title = sys.argv[12]
-        uploadToDefectDojo(False, token, url, product_name, engagement_name, report,scan_type,test_title)
+        print(test_title)
+        #uploadToDefectDojo(False, token, url, product_name, engagement_name, report,scan_type,test_title)
     else:
         print(
             'Usage: python3 import_to_defect_dojo.py --host DOJO_URL --product PRODUCT_NAME --engagement ENGAGEMENT_NAME --report REPORT_FILE --scan-type SCAN_TYPE')
